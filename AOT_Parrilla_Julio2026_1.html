@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AOT · Parrilla Julio 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap');
+:root{--sage:#A9CBB4;--forest:#1A2A22;--stone:#6E726B;--gold:#C7B27A;--mist:#D6E3DC;--cream:#F5F2EC;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--cream);font-family:'Inter',sans-serif;font-weight:300;color:var(--forest);}
+.header{background:var(--forest);padding:52px 64px 44px;display:flex;justify-content:space-between;align-items:flex-end;}
+.header h1{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:300;color:var(--cream);letter-spacing:.04em;line-height:1.1;}
+.sub{font-size:10px;letter-spacing:.22em;color:var(--sage);text-transform:uppercase;margin-top:10px;}
+.month{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:300;color:var(--forest);-webkit-text-stroke:1px var(--sage);opacity:.35;line-height:1;}
+.legend{background:var(--forest);border-top:1px solid rgba(169,203,180,.2);padding:18px 64px;display:flex;gap:24px;flex-wrap:wrap;}
+.li{display:flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mist);}
+.ld{width:8px;height:8px;border-radius:50%;}
+.weeks-nav{background:var(--cream);border-bottom:1px solid rgba(26,42,34,.1);display:flex;padding:0 64px;overflow-x:auto;}
+.wt{padding:18px 28px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--stone);cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;}
+.wt.active,.wt:hover{color:var(--forest);border-bottom-color:var(--forest);}
+.cal{padding:48px 64px;}
+.sl{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--stone);margin-bottom:24px;}
+.grid{display:grid;grid-template-columns:1fr 1fr 1fr;border:1px solid rgba(26,42,34,.12);}
+.dh{background:var(--forest);padding:14px 20px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--sage);text-align:center;border-right:1px solid rgba(255,255,255,.08);}
+.dh:last-child{border-right:none;}
+.pc{padding:24px 20px;border-right:1px solid rgba(26,42,34,.08);border-bottom:1px solid rgba(26,42,34,.08);cursor:pointer;transition:background .2s;min-height:160px;}
+.pc:hover{background:rgba(169,203,180,.08);}
+.pc:nth-child(3n+4){border-right:none;}
+.ec{min-height:160px;border-right:1px solid rgba(26,42,34,.08);border-bottom:1px solid rgba(26,42,34,.08);background:rgba(26,42,34,.02);}
+.ec:nth-child(3n+4){border-right:none;}
+.pw{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--stone);margin-bottom:10px;}
+.pb{display:inline-block;padding:3px 10px;border-radius:2px;font-size:8px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin-bottom:12px;color:var(--forest);}
+.pt{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:400;line-height:1.4;margin-bottom:10px;}
+.pm{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+.ft{font-size:8px;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border:1px solid rgba(26,42,34,.2);color:var(--stone);}
+.dt{font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500;}
+.rb{background:var(--forest);padding:28px 64px;display:flex;gap:48px;border-top:1px solid rgba(169,203,180,.15);}
+.sn{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--cream);}
+.sl2{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--sage);margin-top:4px;}
+/* OVERLAY + PANEL */
+.ov{display:none;position:fixed;inset:0;background:rgba(17,20,16,.6);z-index:100;backdrop-filter:blur(4px);}
+.pnl{position:fixed;right:0;top:0;bottom:0;width:560px;background:var(--cream);z-index:101;overflow-y:auto;transform:translateX(100%);transition:transform .3s ease;}
+.pnl.open{transform:translateX(0);}
+.ph{background:var(--forest);padding:36px 40px 28px;position:relative;}
+.xb{position:absolute;top:20px;right:24px;background:none;border:none;color:var(--sage);font-size:22px;cursor:pointer;line-height:1;}
+.dbg{display:inline-block;padding:4px 12px;border-radius:2px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;color:var(--forest);margin-bottom:14px;}
+.dtl{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300;color:var(--cream);line-height:1.3;}
+.dtg{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+.dtg span{font-size:8px;letter-spacing:.16em;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(169,203,180,.3);color:var(--mist);}
+/* PANEL TABS */
+.pnl-tabs{display:flex;border-bottom:1px solid rgba(26,42,34,.1);background:var(--cream);position:sticky;top:0;z-index:10;}
+.ptab{flex:1;padding:14px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;color:var(--stone);border-bottom:2px solid transparent;text-align:center;transition:all .2s;background:var(--cream);}
+.ptab.active{color:var(--forest);border-bottom-color:var(--forest);}
+/* TAB VIEWS */
+.tab-view{display:none;padding:32px 40px;}
+.tab-view.active{display:block;}
+/* SHARED PANEL COMPONENTS */
+.ds{margin-bottom:28px;}
+.dsl{font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--stone);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(26,42,34,.1);}
+.dc{font-size:13px;line-height:1.75;}
+.cap{font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:400;line-height:1.8;white-space:pre-line;}
+.ctab{background:var(--forest);padding:16px 20px;border-left:3px solid var(--sage);font-size:12px;color:var(--mist);line-height:1.6;font-style:italic;}
+.ht{font-size:11px;color:var(--stone);line-height:1.8;}
+.cb{background:var(--forest);color:var(--sage);border:none;padding:10px 20px;font-size:9px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;margin-top:12px;transition:background .2s;width:100%;}
+.cb:hover{background:#2a3d30;}
+.cb.done{background:var(--sage);color:var(--forest);}
+.divider{border:none;border-top:1px solid rgba(26,42,34,.08);margin:24px 0;}
+/* ASSETS */
+.af-search-row{display:flex;gap:8px;margin-bottom:16px;}
+.af-input{flex:1;background:#fff;border:1px solid rgba(26,42,34,.15);padding:10px 14px;font-family:'Inter',sans-serif;font-size:12px;color:var(--forest);outline:none;}
+.af-input:focus{border-color:var(--sage);}
+.af-sbtn{background:var(--forest);color:var(--sage);border:none;padding:10px 18px;font-size:8px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;white-space:nowrap;}
+.af-type-row{display:flex;gap:6px;margin-bottom:16px;}
+.af-tbtn{padding:6px 14px;border:1px solid rgba(26,42,34,.2);background:transparent;font-size:8px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;color:var(--stone);transition:all .2s;}
+.af-tbtn.active{background:var(--forest);color:var(--sage);border-color:var(--forest);}
+.af-tabs{display:flex;border-bottom:1px solid rgba(26,42,34,.1);margin-bottom:16px;}
+.af-tab{padding:8px 16px;font-size:8px;letter-spacing:.16em;text-transform:uppercase;cursor:pointer;color:var(--stone);border-bottom:2px solid transparent;}
+.af-tab.active{color:var(--forest);border-bottom-color:var(--forest);}
+.af-grid-img,.af-grid-vid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.af-card{position:relative;overflow:hidden;background:#fff;border:1px solid rgba(26,42,34,.08);cursor:pointer;}
+.af-card:hover{box-shadow:0 4px 16px rgba(26,42,34,.1);}
+.af-img,.af-vthumb{width:100%;height:110px;object-fit:cover;display:block;}
+.af-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-60%);width:36px;height:36px;background:rgba(26,42,34,.75);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.af-play::after{content:'';border-left:13px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:3px;}
+.af-meta{padding:8px 10px;}
+.af-author{font-size:9px;color:var(--stone);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.af-btns{display:flex;gap:4px;}
+.af-dl{flex:1;background:var(--forest);color:var(--sage);border:none;padding:5px 0;font-size:7px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:block;text-align:center;}
+.af-lk{flex:1;background:transparent;color:var(--stone);border:1px solid rgba(26,42,34,.2);padding:5px 0;font-size:7px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:block;text-align:center;}
+.af-loader{text-align:center;padding:32px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);}
+.af-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--sage);margin:0 2px;animation:bop .7s infinite alternate;}
+.af-dot:nth-child(2){animation-delay:.2s;} .af-dot:nth-child(3){animation-delay:.4s;}
+@keyframes bop{from{opacity:.3;transform:translateY(0)}to{opacity:1;transform:translateY(-5px)}}
+.af-empty{text-align:center;padding:32px;color:var(--stone);font-size:11px;}
+.af-more{display:block;width:100%;background:transparent;border:1px solid rgba(26,42,34,.15);padding:8px;font-size:8px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;color:var(--stone);margin-top:12px;}
+.af-more:hover{background:var(--forest);color:var(--sage);}
+.af-src{font-size:7px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);position:absolute;top:6px;left:6px;background:rgba(26,42,34,.7);padding:2px 6px;}
+/* DESIGN AGENT */
+.ag-btn{width:100%;background:var(--forest);color:var(--sage);border:none;padding:14px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;transition:background .2s;display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:12px;}
+.ag-btn:hover{background:#2a3d30;}
+.ag-btn:disabled{opacity:.5;cursor:default;}
+.ag-spin,.hf-spin{display:none;width:14px;height:14px;border:2px solid var(--sage);border-top-color:transparent;border-radius:50%;animation:spin .7s linear infinite;}
+.ag-btn.loading .ag-spin,.hf-gen-btn.loading .hf-spin{display:inline-block;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ag-out{background:#fff;border:1px solid rgba(26,42,34,.1);padding:16px;font-size:12px;line-height:1.8;white-space:pre-wrap;display:none;margin-top:10px;}
+.ag-out.show{display:block;}
+.ag-copy{width:100%;background:transparent;border:1px solid rgba(26,42,34,.15);padding:8px;font-size:8px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;color:var(--stone);margin-top:6px;display:none;}
+.ag-copy.show{display:block;}
+.ag-copy:hover{background:var(--forest);color:var(--sage);}
+.ag-copy.done{background:var(--sage);color:var(--forest);}
+/* HIGGSFIELD */
+.hf-sel{width:100%;background:#fff;border:1px solid rgba(26,42,34,.15);padding:9px 12px;font-family:'Inter',sans-serif;font-size:11px;color:var(--forest);outline:none;cursor:pointer;margin-bottom:12px;}
+.hf-ar-row{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.hf-ar{padding:5px 12px;border:1px solid rgba(26,42,34,.2);background:transparent;font-size:8px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;color:var(--stone);transition:all .15s;}
+.hf-ar.active{background:var(--forest);color:var(--sage);border-color:var(--forest);}
+.hf-gen-btn{width:100%;background:var(--forest);color:var(--sage);border:none;padding:14px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;}
+.hf-gen-btn:disabled{opacity:.45;cursor:default;}
+.hf-preview{background:rgba(26,42,34,.04);border-left:2px solid var(--sage);padding:10px 14px;font-size:11px;line-height:1.6;color:var(--stone);margin-bottom:14px;max-height:72px;overflow:hidden;}
+.hf-status{font-size:10px;color:var(--stone);padding:10px 0;text-align:center;}
+.hf-err{font-size:11px;color:#c00;padding:10px;background:#fee;border:1px solid #fcc;margin-top:10px;display:none;}
+.hf-result{margin-top:14px;display:none;}
+.hf-result.show{display:block;}
+.hf-result img,.hf-result video{width:100%;display:block;}
+.hf-result-bar{background:var(--forest);padding:10px 14px;display:flex;gap:8px;align-items:center;}
+.hf-result-lbl{flex:1;font-size:9px;color:var(--mist);letter-spacing:.1em;text-transform:uppercase;}
+.hf-cost-insuf{color:#c00 !important;}
+.hf-result-dl{background:var(--sage);color:var(--forest);border:none;padding:6px 14px;font-size:8px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;text-decoration:none;}
+/* VIDEO MODAL */
+.vmod{display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:300;align-items:center;justify-content:center;}
+.vmod.open{display:flex;}
+.vmod-inner{background:#000;max-width:800px;width:92%;position:relative;}
+.vmod-vid{width:100%;max-height:72vh;display:block;}
+.vmod-close{position:absolute;top:-38px;right:0;background:none;border:none;color:#fff;font-size:26px;cursor:pointer;line-height:1;}
+.vmod-bar{background:var(--forest);padding:14px 20px;display:flex;justify-content:space-between;align-items:center;}
+.vmod-auth{font-size:11px;color:var(--mist);}
+.vmod-dl{background:var(--sage);color:var(--forest);border:none;padding:8px 20px;font-size:8px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-block;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>Parrilla de Contenido<br>Instagram</h1>
+    <div class="sub">AOT &middot; Tailored Experiences &middot; Julio 2026</div>
+  </div>
+  <div class="month">JUL</div>
+</div>
+
+<div class="legend">
+  <div class="li"><div class="ld" style="background:#A9CBB4"></div>P1 &mdash; Inspiración</div>
+  <div class="li"><div class="ld" style="background:#C7B27A"></div>P2 &mdash; Problema</div>
+  <div class="li"><div class="ld" style="background:#D4A0A0"></div>P3 &mdash; Luna de Miel</div>
+  <div class="li"><div class="ld" style="background:#A0B4C8"></div>P4 &mdash; 50+</div>
+  <div class="li"><div class="ld" style="background:#6E726B"></div>P5 &mdash; Marca</div>
+</div>
+
+<div class="weeks-nav">
+  <div class="wt active" onclick="showWeek(1)">S1 &middot; 2&ndash;6 Jul</div>
+  <div class="wt" onclick="showWeek(2)">S2 &middot; 9&ndash;13 Jul</div>
+  <div class="wt" onclick="showWeek(3)">S3 &middot; 16&ndash;20 Jul</div>
+  <div class="wt" onclick="showWeek(4)">S4 &middot; 23&ndash;27 Jul</div>
+  <div class="wt" onclick="showWeek(5)">S5 &middot; 30 Jul</div>
+  <div class="wt" onclick="showWeek(0)">Vista completa</div>
+</div>
+
+<div class="cal">
+  <div class="sl">Publicaciones &middot; Mie / Vie / Dom</div>
+  <div class="grid" id="grid">
+    <div class="dh">Mie</div><div class="dh">Vie</div><div class="dh">Dom</div>
+  </div>
+</div>
+
+<div class="rb">
+  <div><div class="sn">15</div><div class="sl2">Posts totales</div></div>
+  <div><div class="sn">5</div><div class="sl2">Semanas</div></div>
+  <div><div class="sn">7</div><div class="sl2">Destinos</div></div>
+  <div><div class="sn">5</div><div class="sl2">Pilares</div></div>
+</div>
+
+<div class="ov" id="ov" onclick="closePanel()"></div>
+
+<!-- PANEL — everything inside this single div -->
+<div class="pnl" id="pnl">
+
+  <!-- HEADER -->
+  <div class="ph">
+    <button class="xb" onclick="closePanel()">&#x2715;</button>
+    <div class="dbg" id="dbg"></div>
+    <div class="dtl" id="dtl"></div>
+    <div class="dtg" id="dtg"></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="pnl-tabs">
+    <div class="ptab active" id="ptab-post" onclick="switchPTab('post')">Post</div>
+    <div class="ptab" id="ptab-assets" onclick="switchPTab('assets')">Assets</div>
+    <div class="ptab" id="ptab-design" onclick="switchPTab('design')">Diseño ✦</div>
+  </div>
+
+  <!-- TAB: POST -->
+  <div class="tab-view active" id="pview-post">
+    <div class="ds"><div class="dsl">Concepto Visual</div><div class="dc" id="dv"></div></div>
+    <div class="ds">
+      <div class="dsl">Caption</div>
+      <div class="cap" id="dc"></div>
+      <button class="cb" id="bc" onclick="doCopy('dc','bc','Copiar caption')">Copiar caption</button>
+    </div>
+    <div class="ds"><div class="dsl">Call to Action</div><div class="ctab" id="dct"></div></div>
+    <div class="ds">
+      <div class="dsl">Hashtags</div>
+      <div class="ht" id="dhash"></div>
+      <button class="cb" id="bh" onclick="doCopy('dhash','bh','Copiar hashtags')">Copiar hashtags</button>
+    </div>
+  </div>
+
+  <!-- TAB: ASSETS -->
+  <div class="tab-view" id="pview-assets">
+    <div class="ds">
+      <div class="dsl">Buscar recursos visuales</div>
+      <div class="af-search-row">
+        <input class="af-input" id="af-q" type="text" placeholder="Buscar...">
+        <button class="af-sbtn" onclick="afSearch()">Buscar</button>
+      </div>
+      <div class="af-type-row">
+        <button class="af-tbtn active" id="af-both" onclick="afSetType('both')">Ambos</button>
+        <button class="af-tbtn" id="af-img" onclick="afSetType('image')">Imágenes</button>
+        <button class="af-tbtn" id="af-vid" onclick="afSetType('video')">Videos</button>
+      </div>
+    </div>
+    <div id="af-tabs" class="af-tabs" style="display:none">
+      <div class="af-tab active" id="aftab-i" onclick="afSwitchTab('image')">Imágenes <span id="afc-i"></span></div>
+      <div class="af-tab" id="aftab-v" onclick="afSwitchTab('video')">Videos <span id="afc-v"></span></div>
+    </div>
+    <div id="af-area"></div>
+    <button class="af-more" id="af-more" style="display:none" onclick="afMore()">Cargar más</button>
+  </div>
+
+  <!-- TAB: DISEÑO -->
+  <div class="tab-view" id="pview-design">
+
+    <div class="ds">
+      <div class="dsl">Prompt para IA de imágenes</div>
+      <p style="font-size:11px;color:var(--stone);line-height:1.6;margin-bottom:14px">Prompt listo para Midjourney, Firefly o Stable Diffusion — calibrado con la estética AOT.</p>
+      <button class="ag-btn" id="btn-mj" onclick="genMJ()">
+        <div class="ag-spin"></div>Generar prompt de imagen
+      </button>
+      <div class="ag-out" id="out-mj"></div>
+      <button class="ag-copy" id="copy-mj" onclick="agCopy('out-mj','copy-mj')">Copiar prompt</button>
+    </div>
+
+    <hr class="divider">
+
+    <div class="ds">
+      <div class="dsl">Brief para diseñador</div>
+      <p style="font-size:11px;color:var(--stone);line-height:1.6;margin-bottom:14px">Composición, tipografía, paleta, moodboard y entregables — listo para mandar directo.</p>
+      <button class="ag-btn" id="btn-brief" onclick="genBrief()">
+        <div class="ag-spin"></div>Generar brief de diseño
+      </button>
+      <div class="ag-out" id="out-brief"></div>
+      <button class="ag-copy" id="copy-brief" onclick="agCopy('out-brief','copy-brief')">Copiar brief</button>
+    </div>
+
+    <hr class="divider">
+
+    <div class="ds">
+      <div class="dsl">Generar con Higgsfield AI</div>
+      <p style="font-size:11px;color:var(--stone);line-height:1.6;margin-bottom:14px">Genera imagen o video con la paleta y estética AOT directo desde este post.</p>
+
+      <div class="af-type-row">
+        <button class="af-tbtn active" id="hf-type-img" onclick="hfSetType('image')">Imagen</button>
+        <button class="af-tbtn" id="hf-type-vid" onclick="hfSetType('video')">Video / Reel</button>
+      </div>
+
+      <select class="hf-sel" id="hf-model-img" onchange="hfUpdateCost()">
+        <option value="recraft-v4-1" data-cost="1.25">Recraft 4.1 — editorial + paleta &bull; 1.25 cr</option>
+        <option value="soul_location" data-cost="0.12">Soul Location — landscapes &bull; 0.12 cr</option>
+      </select>
+      <select class="hf-sel" id="hf-model-vid" style="display:none" onchange="hfUpdateCost()">
+        <option value="kling3_0" data-cost="10">Kling 3.0 — cinematic premium &bull; 10 cr</option>
+        <option value="cinematic_studio_3_0" data-cost="25">Cinema Studio 3.0 — film grade &bull; 25 cr</option>
+        <option value="veo3_1" data-cost="11">Google Veo 3.1 — ultra realista &bull; 11 cr</option>
+      </select>
+
+      <div style="font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);margin-bottom:8px">Formato</div>
+      <div class="hf-ar-row">
+        <div class="hf-ar active" onclick="hfSetAr('4:5')">4:5 Feed</div>
+        <div class="hf-ar" onclick="hfSetAr('9:16')">9:16 Reel</div>
+        <div class="hf-ar" onclick="hfSetAr('1:1')">1:1 Square</div>
+        <div class="hf-ar" onclick="hfSetAr('16:9')">16:9 Wide</div>
+      </div>
+
+      <div style="font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--stone);margin-bottom:6px">Prompt</div>
+      <div class="hf-preview" id="hf-prompt-preview">Abre un post para ver el prompt...</div>
+
+      <div id="hf-cost-bar" style="display:flex;justify-content:space-between;align-items:center;background:rgba(26,42,34,.05);border:1px solid rgba(26,42,34,.1);padding:10px 14px;margin-bottom:12px;font-size:11px;">
+        <div style="color:var(--stone)">Costo: <strong id="hf-cost-val" style="color:var(--forest)">—</strong></div>
+        <div style="color:var(--stone)">Saldo: <strong id="hf-bal-val" style="color:var(--forest)">—</strong></div>
+        <div id="hf-after-val" style="color:var(--stone);font-size:10px">Quedan: <strong style="color:var(--sage)">—</strong></div>
+      </div>
+      <button class="hf-gen-btn" id="hf-gen-btn" onclick="hfGenerate()">
+        <span>Copiar prompt y abrir Higgsfield &rarr;</span>
+      </button>
+      <div class="hf-status" id="hf-status" style="display:none"></div>
+      <div class="hf-err" id="hf-err"></div>
+
+      <div class="hf-result" id="hf-result">
+        <div id="hf-result-media"></div>
+        <div class="hf-result-bar">
+          <div class="hf-result-lbl" id="hf-result-lbl">Higgsfield AI</div>
+          <a class="hf-result-dl" id="hf-result-dl" href="#" target="_blank" download>Descargar</a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end pview-design -->
+
+</div><!-- end .pnl -->
+
+<!-- VIDEO MODAL -->
+<div class="vmod" id="vmod">
+  <div class="vmod-inner">
+    <button class="vmod-close" onclick="closeVmod()">&#x2715;</button>
+    <video class="vmod-vid" id="vmod-vid" controls></video>
+    <div class="vmod-bar">
+      <div class="vmod-auth" id="vmod-auth"></div>
+      <a class="vmod-dl" id="vmod-dl" href="#" target="_blank">Descargar</a>
+    </div>
+  </div>
+</div>
+
+<script type="application/json" id="data">
+[
+  {
+    "s": 1,
+    "d": "Mie 2 Jul",
+    "p": "P5",
+    "t": "AOT Tailored Experiences. Así empieza julio.",
+    "dest": "Marca",
+    "fmt": "Reel · 10s",
+    "seg": "Ambos",
+    "kw": "travel cinematic departure airport",
+    "v": "Transición cinematográfica sobre Forest Escape. Logo AOT aparece desde negro, fade a 5 destinos: Santorini, Toscana, Costa Rica, Tailandia, Portugal. Texto animado tracking wide: \"El mundo, diseñado para ti.\" Música: cuerdas minimalistas ambient.",
+    "cap": "Julio llegó. Y con él, nuevas historias por diseñar.\n\nEn AOT no vendemos destinos.\nDiseñamos el viaje que ya imaginabas — con cada detalle en su lugar.\n\nDesde el despegue, hasta el placer de volver a casa.\n\n¿Qué destino está en tu lista este año? 🌿",
+    "cta": "Comenta el destino que llevas soñando este 2026 — lo leemos todos.",
+    "hash": "#ViajesAOT #TailoredExperiences #JourneysMadeForYou #AgenciaDeViajes #ViajesPersonalizados #ViajesMexico #CuratedJourneys #MeaningfulMoments #ViajesLujo #DestinosDeSueño"
+  },
+  {
+    "s": 1,
+    "d": "Vie 4 Jul",
+    "p": "P1",
+    "t": "Santorini: la luz que no se puede describir. Solo vivir.",
+    "dest": "Santorini · Grecia",
+    "fmt": "Carrusel · 8 slides",
+    "seg": "Ambos",
+    "kw": "Santorini Greece sunset blue domes",
+    "v": "Slide 1: cúpulas azules sobre caldera al atardecer, luz dorada overexposed estilo Jacquemus. Slides 2–7: callejón blanco vacío al amanecer, desayuno en terraza frente al Egeo, vino en acantilado, cueva hotel en Oia, sunset desde barco, mercado artesanal. Slide 8: Forest Escape + CTA.",
+    "cap": "Hay lugares que ya conoces antes de llegar.\nY luego los ves en persona.\n\nSantorini no es la foto de Instagram.\nEs el calor de las piedras blancas a las 7am.\nEl Egeo en un tono de azul que no tiene nombre.\nEl vino frío mientras el sol desaparece frente a ti.\n\nEso no se diseña en un algoritmo.\nEso se vive.\n\nNosotros nos encargamos de que llegues exactamente cuando y como debe ser. 🌊\n\nGuarda este post si Grecia está en tu lista 🔖",
+    "cta": "Escríbenos \"SANTORINI\" al DM y te enviamos nuestra ruta curada por las islas.",
+    "hash": "#Santorini #GreciaViaje #VisitGreece #ViajesAOT #SantoriniSunset #GreekIslands #ViajesPersonalizados #TailoredExperiences #ViajesLujo #EgeoViaje #MediterraneanTravel"
+  },
+  {
+    "s": 1,
+    "d": "Dom 6 Jul",
+    "p": "P3",
+    "t": "Toscana para dos: el viaje que nunca olvidarán.",
+    "dest": "Toscana · Italia",
+    "fmt": "Post estático",
+    "seg": "Parejas 25–35",
+    "kw": "Tuscany Italy vineyard couple romantic",
+    "v": "Fotografía editorial de cipreses toscanos al amanecer, luz dorada lateral, niebla en el valle. Overlay tipografía serif: \"La luna de miel más elegante del mundo no está en el Caribe.\" Logo AOT esquina inferior. Paleta Golden Horizon + Mist Air.",
+    "cap": "Toscana en luna de miel es algo diferente. 🍷\n\nNo hay overwater bungalows.\nNo hay playa turquesa.\n\nHay una villa rodeada de viñedos que huele a tierra y lavanda.\nHay una cena privada en una bodega del siglo XV.\nHay despertarte sin planes y aun así vivir algo extraordinario.\n\nAlgunos viajan a relajarse.\nOtros viajan a sentirse vivos.\n\nToscana es para los segundos.\n\nY nosotros sabemos exactamente cómo diseñarla para ustedes. ✨",
+    "cta": "Escríbannos \"TOSCANA\" — les preparamos una propuesta de luna de miel sin costo.",
+    "hash": "#LunaDeMielToscana #ToscanaHoneymoon #ItaliaRomantica #ViajesAOT #LunaDeMiel #TailoredExperiences #ViajesItalia #HoneymoonItaly #ViajeDeParejas #ViajesRomanticos #TuscanyTravel"
+  },
+  {
+    "s": 2,
+    "d": "Mie 9 Jul",
+    "p": "P2",
+    "t": "Por qué tu \"viaje soñado\" terminó siendo decepcionante.",
+    "dest": "Educativo",
+    "fmt": "Carrusel · 7 slides",
+    "seg": "Ambos",
+    "kw": "travel planning hotel luxury editorial",
+    "v": "Slide 1: fondo Stone Way oscuro, texto grande serif: \"5 razones por las que un viaje caro puede sentirse barato.\" Slides 2–6: formato bipartito — izquierda el error en fondo neutro, derecha la solución AOT en Sage Journey. Errores: hotel por precio no experiencia, itinerario sobrecargado, traslados no coordinados, experiencias genéricas, sin soporte. Slide 7: CTA Forest Escape.",
+    "cap": "El vuelo estaba perfecto. El hotel parecía impresionante en las fotos.\n\nY sin embargo, algo no cuadró. 😔\n\nEsto lo escuchamos más de lo que imaginas.\n\nEl problema no suele ser el destino.\nEs cómo se diseñó el viaje.\n\n→ Demasiadas actividades en poco tiempo\n→ Hotel bonito pero en la zona equivocada\n→ Traslados improvisados que consumieron horas\n→ Experiencias genéricas de turista\n→ Nadie disponible cuando algo cambió\n\nEn AOT diseñamos viajes que se sienten como debían sentirse.\nPorque cada detalle importa. 🌿",
+    "cta": "¿Te ha pasado? Cuéntanos en comentarios — y te decimos cómo evitarlo la próxima vez.",
+    "hash": "#ViajesAOT #AgenciaDeViajes #ErroresAlViajar #ViajesInteligentes #TipsDeViaje #ViajesSinEstrés #AntesDeViajar #ViajesPersonalizados #ViajesConfiables #TailoredExperiences"
+  },
+  {
+    "s": 2,
+    "d": "Vie 11 Jul",
+    "p": "P1",
+    "t": "Tailandia no es lo que crees. Es mucho más.",
+    "dest": "Tailandia",
+    "fmt": "Carrusel · 8 slides",
+    "seg": "Ambos",
+    "kw": "Thailand temple jungle travel cinematic",
+    "v": "Slide 1: templo Doi Suthep al amanecer con niebla, tonos Forest + Golden Horizon, overexposed suave. Slides 2–7: longtail boat en Krabi, mercado flotante Bangkok, villa privada Koh Samui, elefantes en santuario ético Chiang Mai, cena en terraza con vista al Chao Phraya, templo flor de loto. Slide 8: CTA.",
+    "cap": "Tailandia. La mencionas y todo el mundo piensa en lo mismo.\n\nPero hay una Tailandia que pocas personas conocen.\n\nLa del norte de Chiang Mai — donde los templos en la niebla de las montañas no tienen fila.\nLa de una villa privada en Koh Samui donde el océano es solo tuyo.\nLa del mercado de Bangkok donde nadie habla inglés y eso es exactamente lo mejor.\nLa del santuario donde los elefantes caminan libres.\n\nEse viaje existe.\nY lo diseñamos para ti. 🐘\n\nDesliza para verlo 👉",
+    "cta": "Escríbenos \"TAILANDIA\" y te mandamos nuestra ruta menos conocida — la que no está en Google.",
+    "hash": "#Tailandia #ThailandTravel #ViajesAOT #VisitThailand #ChiangMai #KohSamui #BangkokTravel #ViajesPersonalizados #TailoredExperiences #AsiaViaje #DestinosAsiaticos #ViajesLujo"
+  },
+  {
+    "s": 2,
+    "d": "Dom 13 Jul",
+    "p": "P4",
+    "t": "El viaje que no sabías que podías permitirte.",
+    "dest": "Varios destinos",
+    "fmt": "Post estático",
+    "seg": "Viajeros 50+",
+    "kw": "mature couple travel europe luxury calm",
+    "v": "Pareja madura de espaldas frente a paisaje abierto — vista de montaña europea o terraza mediterránea al atardecer. Luz cinematográfica lateral dorada. Texto serif: \"Lo más difícil de un gran viaje no es pagarlo. Es organizarlo.\" Paleta Mist Air + Forest.",
+    "cap": "Hay un viaje que llevas años pensando.\n\nEuropa. El Mediterráneo. Japón. Costa Rica.\nSiempre hay una razón para postergarlo.\n\nLa logística. El idioma.\n¿Y si algo sale mal?\n\nEn AOT nos encargamos de exactamente eso — para que tú nunca tengas que hacerlo.\n\n✓ Itinerario diseñado a tu ritmo\n✓ Traslados coordinados en cada ciudad\n✓ Hoteles verificados y bien ubicados\n✓ Soporte en español las 24 horas\n✓ Una persona real que conoce tu viaje completo\n\nTú solo tienes que aparecer. 🌿",
+    "cta": "Escríbenos \"QUIERO VIAJAR\" — platicamos sin compromiso y sin formularios.",
+    "hash": "#ViajesAOT #ViajesOrganizados #ViajesMayores #TravelOver50 #AgenciaDeViajes #ViajesSinEstrés #ViajesPersonalizados #TailoredExperiences #ViajesConFamilia #ViajesLujo"
+  },
+  {
+    "s": 3,
+    "d": "Mie 16 Jul",
+    "p": "P1",
+    "t": "Maldivas: lo que nadie te dice hasta que llegas.",
+    "dest": "Maldivas",
+    "fmt": "Carrusel · 8 slides",
+    "seg": "Ambos",
+    "kw": "Maldives overwater bungalow turquoise ocean aerial",
+    "v": "Slide 1: drone aéreo de atolón en luz del mediodía, agua en capas de turquesa. Slides 2–7: villa overwater interior con luz filtrada y materiales naturales, snorkel con tiburones ballena, cena privada en playa sin luz eléctrica, bioluminiscencia nocturna, desayuno flotante, última vista al amanecer. Slide 8: Forest Escape + CTA.",
+    "cap": "Maldivas no es una exageración.\n\nEs exactamente así. 🌊\n\nEl agua de ese azul que parece editado.\nLos peces de colores bajo tu terraza.\nEl silencio total en medio del océano Índico.\n\nPero hay algo que nadie te dice:\nla diferencia entre una villa genérica y la experiencia real de Maldivas está en los detalles.\n\nEl atolón que eliges.\nEl resort que nadie menciona en TripAdvisor pero que es el mejor de todos.\nLa cena que se reserva con meses de anticipación.\n\nEso lo sabemos nosotros. 🌿\n\nDesliza y mira lo que diseñamos para nuestros clientes 👉",
+    "cta": "Escríbenos \"MALDIVAS\" para una propuesta personalizada — incluyendo opciones que no están en Google.",
+    "hash": "#Maldivas #MaldivesTravel #ViajesAOT #OverwaterBungalow #MaldivesLife #TailoredExperiences #ViajesLujo #ParaisoViaje #DestinosSoñados #MaldivesIslands #ViajesPersonalizados"
+  },
+  {
+    "s": 3,
+    "d": "Vie 18 Jul",
+    "p": "P3",
+    "t": "Portugal para luna de miel: el secreto mejor guardado de Europa.",
+    "dest": "Portugal",
+    "fmt": "Carrusel · 7 slides",
+    "seg": "Parejas 25–35",
+    "kw": "Portugal Lisbon romantic travel couple golden hour",
+    "v": "Slide 1: callejones de Lisboa al atardecer, luz cálida naranja, azulejos, pareja de espaldas. Paleta Golden Horizon + Sand Passage. Slides 2–6: Douro Valley con viñedos desde drone, hotel boutique en quinta histórica, cena en azotea con fado en vivo, playa salvaje del Alentejo, desayuno de pastel de nata y café en terraza. Slide 7: CTA Forest Escape.",
+    "cap": "Portugal para luna de miel. Todavía pocos lo saben. 🍷\n\nNo es Santorini. No es París.\nEs algo diferente — y por eso es perfecto.\n\nLisboa al atardecer con el Tajo en naranja.\nUna quinta en el valle del Douro donde solo existen el vino, los viñedos y ustedes.\nUna playa del Alentejo donde no hay nadie más.\n\nPortugal no grita. Portugal susurra.\nY a veces eso es exactamente lo que una luna de miel necesita.\n\nLo diseñamos de principio a fin para ustedes. 🌿",
+    "cta": "Escríbannos \"PORTUGAL DOS\" — les preparamos itinerario y propuesta sin costo.",
+    "hash": "#LunaDeMielPortugal #PortugalHoneymoon #ViajesAOT #LisboaViaje #DouroValley #ViajesRomanticos #HoneymoonEurope #TailoredExperiences #LunaDeMiel #EuropaViaje"
+  },
+  {
+    "s": 3,
+    "d": "Dom 20 Jul",
+    "p": "P5",
+    "t": "Lo que dicen quienes viajaron con AOT este verano.",
+    "dest": "Testimonios",
+    "fmt": "Carrusel · 5 slides",
+    "seg": "Ambos",
+    "kw": "luxury travel editorial minimal lifestyle",
+    "v": "Slide 1: fondo Forest Escape, texto serif grande: \"Sus palabras. No las nuestras.\" Slides 2–5: cita textual de cliente real, tipografía grande serif en Sand Passage sobre fondo Forest, nombre de pila + destino en Sage Journey tamaño pequeño. Slide 5: logo + CTA. Estética editorial premium, mucho espacio negativo.",
+    "cap": "Podríamos describir lo que hacemos.\n\nPero preferimos que lo cuenten ellos. 🤍\n\nCada historia es un viaje diseñado desde cero.\nCada comentario, una promesa cumplida.\n\nDesliza 👉\n\n¿Ya tienes una historia con AOT?\nCuéntanosla en comentarios.",
+    "cta": "Escríbenos y empezamos a diseñar tu historia hoy.",
+    "hash": "#ViajesAOT #Testimonios #ClientesAOT #TailoredExperiences #JourneysMadeForYou #AgenciaDeViajes #ViajesPersonalizados #CuratedJourneys #MeaningfulMoments #ViajesMexico"
+  },
+  {
+    "s": 4,
+    "d": "Mie 23 Jul",
+    "p": "P1",
+    "t": "Costa Rica: la naturaleza más extrema del mundo, diseñada para ti.",
+    "dest": "Costa Rica",
+    "fmt": "Carrusel · 8 slides",
+    "seg": "Ambos",
+    "kw": "Costa Rica jungle volcano nature waterfall",
+    "v": "Slide 1: canopy sobre selva tropical al amanecer, neblina, luz verde filtrada. Tonos Forest + Sage + Gold. Slides 2–7: volcán Arenal al anochecer, aguas termales privadas en la selva, tortugas en playa Osa de noche, lodge en árbol con vista a la selva, quetzal en Monteverde, rafting en río Pacuare. Slide 8: CTA.",
+    "cap": "Costa Rica no es un destino de playa.\nEs un destino de vida. 🌿\n\nEl volcán que ves desde las aguas termales al anochecer.\nEl quetzal — uno de los pájaros más raros del mundo — en Monteverde.\nLas tortugas que llegan a desovar en la playa de noche, cuando no hay nadie más.\n\nNo hay filtro para esto.\nNo hay manera de describirselo a alguien que no lo ha vivido.\n\nPero hay una manera de asegurarte de que lo vivas exactamente como debe ser.\n\nDesliza 👉",
+    "cta": "Escríbenos \"COSTA RICA\" y te armamos la ruta que ninguna guía tiene.",
+    "hash": "#CostaRica #CostaRicaTravel #ViajesAOT #NaturalezaViaje #Arenal #Monteverde #VisitCostaRica #ViajesPersonalizados #TailoredExperiences #EcoTravel #ViajesAventura #AméricaCentral"
+  },
+  {
+    "s": 4,
+    "d": "Vie 25 Jul",
+    "p": "P2",
+    "t": "Planes de pago cómodos. Tu viaje no tiene que esperar.",
+    "dest": "Educativo",
+    "fmt": "Reel · 8s",
+    "seg": "Ambos",
+    "kw": "travel planning minimal editorial cinematic",
+    "v": "Reel minimalista — fondo Forest Escape, texto animado en tipografía editorial. Secuencia: \"El viaje que imaginas / no tiene que esperar / hasta tener todo junto.\" Sin música intensa, ambient tranquilo. Logo AOT al final.",
+    "cap": "El viaje de tu vida no debería esperar hasta tener todo el dinero junto.\n\nEn AOT tenemos planes de pago diseñados para que empieces hoy.\n\n✓ Aparta tu fecha con un enganche\n✓ Liquida en parcialidades cómodas\n✓ Sin costos ocultos ni sorpresas\n✓ El precio que acordamos es el que pagas\n\nGrecia. Toscana. Costa Rica. Tailandia. Maldivas.\nLo que sea que esté en tu lista.\n\nEmpieza hoy. 🌿",
+    "cta": "Escríbenos \"PLAN DE PAGO\" y te explicamos cómo funciona — sin compromiso.",
+    "hash": "#ViajesAOT #PlanesDeViaje #ViajarAMeses #AgenciaDeViajes #ViajesPersonalizados #ViajesAccesibles #TailoredExperiences #ViajesMexico #SueñaYViaja"
+  },
+  {
+    "s": 4,
+    "d": "Dom 27 Jul",
+    "p": "P4",
+    "t": "Son las 2am en Bangkok. Tu vuelo cambió. Nosotros ya lo sabemos.",
+    "dest": "Marca / Soporte",
+    "fmt": "Post estático",
+    "seg": "Viajeros 50+",
+    "kw": "airport night travel cinematic moody",
+    "v": "Diseño tipográfico editorial sobre Mist Air. Texto central impactante serif: \"Son las 2am en Bangkok. Tu vuelo cambió. Nosotros ya lo sabemos.\" Parte inferior: logo AOT + \"Soporte 24/7. Siempre.\" Diseño limpio, mucho espacio negativo.",
+    "cap": "Son las 2am en Bangkok.\nTu vuelo de conexión cambió de horario.\nNo hablas tailandés.\nNo sabes a quién llamar.\n\nCon AOT, eso no pasa.\n\nTenemos alguien disponible las 24 horas, los 7 días, durante todo tu viaje.\nUna persona real. En español. Con soluciones reales.\n\nNo un chatbot.\nNo un correo que tarda 48 horas.\nAlguien que ya conoce tu itinerario completo y puede resolverlo ahora.\n\nEso es viajar con AOT. 🌿",
+    "cta": "¿Tienes dudas sobre cómo funciona nuestro soporte? Escríbenos y te explicamos.",
+    "hash": "#ViajesAOT #Soporte24h #AgenciaDeViajes #ViajesMayores #ViajesSinEstrés #TravelSupport #ViajesConfiables #TailoredExperiences #ViajesOrganizados #ViajesSeguro"
+  },
+  {
+    "s": 5,
+    "d": "Mie 30 Jul",
+    "p": "P1",
+    "t": "Japón en verano: la versión que nadie te muestra.",
+    "dest": "Japón",
+    "fmt": "Carrusel · 8 slides",
+    "seg": "Ambos",
+    "kw": "Japan Kyoto summer festival lanterns night",
+    "v": "Slide 1: festival Obon — linternas flotando en río oscuro, luz cálida naranja. Slides 2–7: santuario Fushimi Inari de noche sin turistas, yukata en callejón de Gion, fuegos artificiales hanabi sobre lago Suwa, kakigori en mercado de verano, onsen al aire libre al atardecer, callejón de bambú de Arashiyama con luz vespertina. Slide 8: Forest Escape + CTA.",
+    "cap": "Japón en verano no es lo que esperabas. 🎆\n\nNo son los cerezos. No es la nieve.\nEs algo completamente diferente — y por eso vale la pena.\n\nLos festivales de verano — linternas que flotan sobre el río en agosto.\nEl Fushimi Inari de noche, cuando no hay nadie.\nUn yukata prestado por el ryokan, caminando por Gion al atardecer.\nFuegos artificiales hanabi sobre el lago.\n\nJapón en verano tiene una energía distinta.\nMás íntima. Más tuya.\n\nDesliza y mira lo que diseñamos para esta temporada 👉",
+    "cta": "Escríbenos \"JAPÓN VERANO\" — hay fechas disponibles para agosto y septiembre.",
+    "hash": "#JaponVerano #SummerJapan #ViajesJapon #ViajesAOT #JaponFestival #FushimiInari #KyotoTravel #TailoredExperiences #ViajesPersonalizados #VisitJapan #JaponViaje"
+  },
+  {
+    "s": 5,
+    "d": "Vie 1 Ago",
+    "p": "P3",
+    "t": "Grecia para luna de miel: Mykonos, Paros o Naxos. Cómo elegir.",
+    "dest": "Grecia · Islas",
+    "fmt": "Carrusel · 6 slides",
+    "seg": "Parejas 25–35",
+    "kw": "Greek islands Paros Mykonos sunset couple honeymoon",
+    "v": "Slide 1: vista aérea de Paros al atardecer, agua turquesa suave. Slides 2–5: comparativa editorial entre las 3 islas — ambiente, hoteles boutique, playa ideal, cena típica. Slide 6: CTA Forest Escape. Paleta: Mist Air + Golden Horizon.",
+    "cap": "Grecia para luna de miel. Pero, ¿cuál isla? 🌊\n\nMuchas parejas llegan a Santorini porque es lo que todos conocen.\nPero hay islas griegas perfectas para una luna de miel que casi nadie menciona.\n\nMykonos — para los que quieren vida, gastronomía y atardeceres en Little Venice.\nParos — para los que prefieren calma, callejones blancos y playa real.\nNaxos — para los que buscan algo auténtico, local y sin multitudes.\n\nNo hay respuesta incorrecta.\nHay la isla correcta para ustedes.\n\nY nosotros sabemos cuál es. 🌿",
+    "cta": "Escríbannos \"GRECIA DOS\" y les diseñamos la ruta perfecta según lo que imaginan.",
+    "hash": "#GreciaHoneymoon #LunaDeMielGrecia #ViajesAOT #Paros #Mykonos #Naxos #GreekIslands #HoneymoonTravel #LunaDeMiel #ViajesRomanticos #TailoredExperiences"
+  },
+  {
+    "s": 5,
+    "d": "Dom 3 Ago",
+    "p": "P5",
+    "t": "Así empieza un viaje con AOT. De principio a fin.",
+    "dest": "Marca",
+    "fmt": "Reel · 10s",
+    "seg": "Ambos",
+    "kw": "luxury hotel travel cinematic arrival suite",
+    "v": "Reel secuencial de momentos: propuesta enviada, confirmación de reserva, llegada al hotel con todo listo, vista desde terraza al amanecer, mesa de cena preparada, último atardecer. Sin texto en video. Audio: música ambient editorial. Caption narra el proceso AOT de principio a fin.",
+    "cap": "Así se ve viajar con AOT.\n\nDe nuestro lado: meses de planificación, proveedores verificados, detalles confirmados, itinerario afinado.\n\nDe tu lado: la maleta y las ganas de llegar.\n\nNada más.\n\nNo tienes que preguntar cómo llegar al hotel.\nNo tienes que negociar con el chofer del aeropuerto.\nNo tienes que buscar restaurantes en Google Maps.\n\nTodo está listo antes de que despegues.\n\nEso es lo que diseñamos para cada cliente. 🌿",
+    "cta": "Comenta \"ASÍ QUIERO\" si esto es exactamente lo que buscas.",
+    "hash": "#ViajesAOT #TailoredExperiences #AgenciaDeViajes #ViajesPersonalizados #JourneysMadeForYou #ViajesSinEstrés #CuratedJourneys #ViajesLujo #MeaningfulMoments #ViajesMexico"
+  }
+]
+</script>
+
+<script>
+
+var PX_KEY = "5mUHV2vohzYEi1rpWRM6m8ccScQJukwCpBNgIkrBESsj8cMQCfQFAqLX";
+var PIX_KEY = "3497782-45d84d1bff65966d4ffd8d22f";
+
+var PC = {P1:{l:"P1 Inspiraci\u00f3n",c:"#A9CBB4"},P2:{l:"P2 Problema",c:"#C7B27A"},P3:{l:"P3 Luna de Miel",c:"#D4A0A0"},P4:{l:"P4 50+",c:"#A0B4C8"},P5:{l:"P5 Marca",c:"#6E726B"}};
+var POSTS = JSON.parse(document.getElementById("data").textContent);
+
+// --- CALENDAR -------------------------------------------
+function showWeek(n){
+  var grid = document.getElementById("grid");
+  var hdrs = Array.from(grid.querySelectorAll(".dh")).map(function(h){return h.cloneNode(true);});
+  grid.innerHTML = "";
+  hdrs.forEach(function(h){grid.appendChild(h);});
+  var list = n===0 ? POSTS : POSTS.filter(function(p){return p.s===n;});
+  for(var i=0;i<list.length;i+=3){
+    var row=list.slice(i,i+3);
+    while(row.length<3) row.push(null);
+    row.forEach(function(post){
+      if(post){
+        var c=document.createElement("div"); c.className="pc";
+        var idx=POSTS.indexOf(post);
+        c.onclick=(function(x){return function(){openPanel(x);};})(idx);
+        c.innerHTML='<div class="pw">S'+post.s+' &middot; '+post.d+'</div>'+
+          '<div class="pb" style="background:'+PC[post.p].c+'">'+PC[post.p].l+'</div>'+
+          '<div class="pt">'+post.t+'</div>'+
+          '<div class="pm"><div class="ft">'+post.fmt+'</div><div class="dt">'+post.dest+'</div></div>';
+        grid.appendChild(c);
+      } else {
+        var e=document.createElement("div"); e.className="ec"; grid.appendChild(e);
+      }
+    });
+  }
+  document.querySelectorAll(".wt").forEach(function(t,i){
+    t.classList.toggle("active",[1,2,3,4,5,0][i]===n);
+  });
+}
+
+// --- PANEL -----------------------------------------------
+var curKw = "";
+
+function openPanel(idx){
+  var p=POSTS[idx];
+  curKw = p.kw || p.dest;
+  document.getElementById("dbg").textContent=PC[p.p].l;
+  document.getElementById("dbg").style.background=PC[p.p].c;
+  document.getElementById("dtl").textContent=p.t;
+  document.getElementById("dtg").innerHTML="<span>"+p.fmt+"</span><span>"+p.dest+"</span><span>"+p.seg+"</span><span>"+p.d+"</span>";
+  curPost=p;
+  hfBuildPrompt();
+  hfUpdateCost();
+  document.getElementById("dv").textContent=p.v;
+  document.getElementById("dc").textContent=p.cap;
+  document.getElementById("dct").textContent=p.cta;
+  document.getElementById("dhash").textContent=p.hash;
+  // reset al tab de post
+  switchPTab("post");
+  // pre-fill search con keywords del post
+  document.getElementById("af-q").value = curKw;
+  // reset asset state
+  afImgs=[]; afVids=[]; afIPage=1; afVPage=1;
+  document.getElementById("af-area").innerHTML="";
+  document.getElementById("af-tabs").style.display="none";
+  document.getElementById("af-more").style.display="none";
+  document.getElementById("ov").style.display="block";
+  document.getElementById("pnl").classList.add("open");
+}
+
+function closePanel(){
+  document.getElementById("ov").style.display="none";
+  document.getElementById("pnl").classList.remove("open");
+  closeVmod();
+}
+
+function switchPTab(t){
+  ["post","assets","design"].forEach(function(x){
+    var tab = document.getElementById("ptab-"+x);
+    var view = document.getElementById("pview-"+x);
+    if(tab) tab.classList.toggle("active", x===t);
+    if(view) view.classList.toggle("active", x===t);
+  });
+  document.getElementById("pnl").scrollTop = 0;
+  if(t==="assets" && afImgs.length===0 && afVids.length===0){
+    afSearch();
+  }
+}
+
+function doCopy(sid,bid,lbl){
+  navigator.clipboard.writeText(document.getElementById(sid).textContent).then(function(){
+    var b=document.getElementById(bid);
+    b.textContent="Copiado"; b.classList.add("done");
+    setTimeout(function(){b.textContent=lbl;b.classList.remove("done");},2000);
+  });
+}
+
+// --- ASSET FINDER ----------------------------------------
+var afType="both", afImgs=[], afVids=[], afIPage=1, afVPage=1, afCurTab="image";
+
+function afSetType(t){
+  afType=t;
+  ["both","img","vid"].forEach(function(x){
+    document.getElementById("af-"+x).classList.toggle("active",x===t||(t==="both"&&x==="both"));
+  });
+  // reset results and re-search with new type
+  afImgs=[]; afVids=[]; afIPage=1; afVPage=1;
+  if(afImgs.length>0||afVids.length>0||document.getElementById("af-area").innerHTML!==""){
+    afSearch();
+  } else {
+    afSearch();
+  }
+}
+
+async function afSearch(){
+  var q=document.getElementById("af-q").value.trim();
+  if(!q) return;
+  afImgs=[]; afVids=[]; afIPage=1; afVPage=1;
+  afShowLoader();
+  try{
+    var ps=[];
+    if(afType==="both"||afType==="image"){ps.push(afPexImg(q,1));ps.push(afPixImg(q,1));}
+    if(afType==="both"||afType==="video"){ps.push(afPexVid(q,1));ps.push(afPixVid(q,1));}
+    await Promise.all(ps);
+    afRender();
+  }catch(e){document.getElementById("af-area").innerHTML='<div class="af-empty">Error: '+e.message+'</div>';}
+}
+
+async function afPexImg(q,pg){
+  var r=await fetch("https://api.pexels.com/v1/search?query="+encodeURIComponent(q)+"&per_page=12&page="+pg,{headers:{"Authorization":PX_KEY}});
+  if(!r.ok) return;
+  var d=await r.json();
+  (d.photos||[]).forEach(function(p){afImgs.push({src:"Pexels",thumb:p.src.medium,full:p.src.large,author:p.photographer,url:p.url});});
+}
+async function afPixImg(q,pg){
+  var r=await fetch("https://pixabay.com/api/?key="+PIX_KEY+"&q="+encodeURIComponent(q)+"&per_page=10&page="+pg+"&image_type=photo&orientation=horizontal&safesearch=true");
+  if(!r.ok) return;
+  var d=await r.json();
+  (d.hits||[]).forEach(function(p){afImgs.push({src:"Pixabay",thumb:p.webformatURL,full:p.largeImageURL,author:p.user,url:p.pageURL});});
+}
+async function afPexVid(q,pg){
+  var r=await fetch("https://api.pexels.com/videos/search?query="+encodeURIComponent(q)+"&per_page=10&page="+pg,{headers:{"Authorization":PX_KEY}});
+  if(!r.ok) return;
+  var d=await r.json();
+  (d.videos||[]).forEach(function(v){
+    var f=v.video_files.find(function(x){return x.quality==="hd";})||v.video_files[0];
+    afVids.push({src:"Pexels",thumb:v.image,vidUrl:f?f.link:"",author:v.user.name,url:v.url,dur:v.duration});
+  });
+}
+async function afPixVid(q,pg){
+  var r=await fetch("https://pixabay.com/api/videos/?key="+PIX_KEY+"&q="+encodeURIComponent(q)+"&per_page=10&page="+pg+"&safesearch=true");
+  if(!r.ok) return;
+  var d=await r.json();
+  (d.hits||[]).forEach(function(v){
+    var f=v.videos.medium||v.videos.small||v.videos.large;
+    var thumb=v.videos.small?v.videos.small.thumbnail:(v.videos.medium?v.videos.medium.thumbnail:"");
+    afVids.push({src:"Pixabay",thumb:thumb,vidUrl:f?f.url:"",author:v.user,url:v.pageURL,dur:v.duration});
+  });
+}
+
+function afRender(){
+  var tabs=document.getElementById("af-tabs");
+  if(afType==="both"){
+    tabs.style.display="flex";
+    document.getElementById("afc-i").textContent="("+afImgs.length+")";
+    document.getElementById("afc-v").textContent="("+afVids.length+")";
+    afRenderTab(afCurTab);
+  } else if(afType==="image"){tabs.style.display="none";afCurTab="image";afRenderImgs();}
+  else{tabs.style.display="none";afCurTab="video";afRenderVids();}
+}
+
+function afSwitchTab(t){
+  afCurTab=t;
+  document.getElementById("aftab-i").classList.toggle("active",t==="image");
+  document.getElementById("aftab-v").classList.toggle("active",t==="video");
+  afRenderTab(t);
+}
+function afRenderTab(t){if(t==="image")afRenderImgs();else afRenderVids();}
+
+function afRenderImgs(){
+  var a=document.getElementById("af-area");
+  if(!afImgs.length){a.innerHTML='<div class="af-empty">Sin resultados de imagen</div>';return;}
+  var h='<div class="af-grid-img">';
+  afImgs.forEach(function(img){
+    h+='<div class="af-card">'+
+      '<div style="position:relative"><img class="af-img" src="'+img.thumb+'" loading="lazy">'+
+      '<div class="af-src">'+img.src+'</div></div>'+
+      '<div class="af-meta"><div class="af-author">'+img.author+'</div>'+
+      '<div class="af-btns">'+
+        '<a class="af-dl" href="'+img.full+'" target="_blank" download>Descargar</a>'+
+        '<a class="af-lk" href="'+img.url+'" target="_blank">Ver</a>'+
+      '</div></div></div>';
+  });
+  h+='</div>';
+  a.innerHTML=h;
+  document.getElementById("af-more").style.display="block";
+  document.getElementById("af-more").textContent="Cargar m\u00e1s im\u00e1genes";
+}
+
+function afRenderVids(){
+  var a=document.getElementById("af-area");
+  if(!afVids.length){a.innerHTML='<div class="af-empty">Sin resultados de video</div>';return;}
+  var h='<div class="af-grid-vid">';
+  afVids.forEach(function(v,i){
+    var dur=v.dur?Math.floor(v.dur/60)+":"+String(v.dur%60).padStart(2,"0"):"";
+    h+='<div class="af-card" onclick="afPlayVidIdx('+i+')">'+
+      '<div style="position:relative">'+
+        '<img class="af-vthumb" src="'+v.thumb+'" loading="lazy">'+
+        '<div class="af-play"></div>'+
+        '<div class="af-src">'+v.src+'</div>'+
+        (dur?'<div style="position:absolute;bottom:5px;right:5px;background:rgba(0,0,0,.7);color:#fff;font-size:9px;padding:2px 5px">'+dur+'s</div>':'')
+      +'</div>'+
+      '<div class="af-meta"><div class="af-author">'+v.author+'</div>'+
+      '<div class="af-btns">'+
+        '<a class="af-dl" href="'+v.vidUrl+'" target="_blank" download onclick="event.stopPropagation()">Descargar</a>'+
+        '<a class="af-lk" href="'+v.url+'" target="_blank" onclick="event.stopPropagation()">Ver</a>'+
+      '</div></div></div>';
+  });
+  h+='</div>';
+  a.innerHTML=h;
+  document.getElementById("af-more").style.display="block";
+  document.getElementById("af-more").textContent="Cargar m\u00e1s videos";
+}
+
+async function afMore(){
+  var btn=document.getElementById("af-more");
+  btn.disabled=true; btn.textContent="Cargando...";
+  var q=document.getElementById("af-q").value.trim();
+  try{
+    if(afCurTab==="image"){
+      afIPage++;
+      await Promise.all([afPexImg(q,afIPage),afPixImg(q,afIPage)]);
+      afRenderImgs();
+    } else {
+      afVPage++;
+      await Promise.all([afPexVid(q,afVPage),afPixVid(q,afVPage)]);
+      afRenderVids();
+    }
+  }catch(e){}
+  btn.disabled=false;
+  btn.textContent=afCurTab==="image"?"Cargar m\u00e1s im\u00e1genes":"Cargar m\u00e1s videos";
+}
+
+function afShowLoader(){
+  document.getElementById("af-area").innerHTML='<div class="af-loader"><div class="af-dot"></div><div class="af-dot"></div><div class="af-dot"></div><br><br>Buscando assets...</div>';
+  document.getElementById("af-tabs").style.display="none";
+  document.getElementById("af-more").style.display="none";
+}
+
+function afPlayVidIdx(i){
+  var v=afVids[i];
+  if(v) afPlayVid(v.vidUrl,v.author,v.vidUrl);
+}
+function afPlayVid(url,author,dl){
+  if(!url) return;
+  document.getElementById("vmod-vid").src=url;
+  document.getElementById("vmod-auth").textContent="Por: "+author;
+  document.getElementById("vmod-dl").href=dl;
+  document.getElementById("vmod").classList.add("open");
+}
+function closeVmod(){
+  document.getElementById("vmod").classList.remove("open");
+  var v=document.getElementById("vmod-vid"); v.pause(); v.src="";
+}
+document.getElementById("vmod").addEventListener("click",function(e){if(e.target===this)closeVmod();});
+
+
+// --- DESIGN AGENT (local generation — no API call needed) ----------------
+var curPost = null;
+
+function genMJ(){
+  if(!curPost){ return; }
+  var btn = document.getElementById("btn-mj");
+  var out = document.getElementById("out-mj");
+  var cp  = document.getElementById("copy-mj");
+  btn.disabled = true;
+
+  var p = curPost;
+  var dest = p.dest;
+  var concept = p.v;
+  var fmt = p.fmt;
+  var isReel = fmt.toLowerCase().indexOf("reel") > -1;
+  var ar = isReel ? "9:16 vertical" : "4:5 portrait";
+
+  var prompt1 =
+    dest + " travel editorial photography. " +
+    concept.split(".")[0] + ". " +
+    "Overexposed warm Mediterranean light, golden hour, soft film grain, " +
+    "Jacquemus aesthetic, quiet luxury, cinematic shallow depth of field, " +
+    "sage green and sand tones, editorial negative space, " +
+    "shot on Leica Q3, 28mm f/1.7, ultra high resolution. " +
+    "--ar " + (isReel ? "9:16" : "4:5") + " --style raw --stylize 750 --q 2";
+
+  var prompt2 =
+    dest + " luxury lifestyle detail shot. " +
+    "Textural close-up, natural light from the side, " +
+    "muted earth tones, olive green and warm sand palette, " +
+    "editorial still life, premium travel magazine aesthetic, " +
+    "Kinfolk / Cereal magazine style, minimal composition, " +
+    "shot on Phase One IQ4, 120mm macro, --ar 1:1 --style raw --stylize 600 --q 2";
+
+  var result = "-- PROMPT PRINCIPAL (portada / hero) --\n\n" + prompt1 + "\n\n-- PROMPT SECUNDARIO (slide interior / detalle) --\n\n" + prompt2;
+
+  out.textContent = result;
+  out.classList.add("show");
+  cp.classList.add("show");
+  btn.disabled = false;
+}
+
+function genBrief(){
+  if(!curPost){ return; }
+  var btn  = document.getElementById("btn-brief");
+  var out  = document.getElementById("out-brief");
+  var cp   = document.getElementById("copy-brief");
+  btn.disabled = true;
+
+  var p = curPost;
+  var fmtL = p.fmt.toLowerCase();
+  var isReel   = fmtL.indexOf("reel") > -1;
+  var isCarr   = fmtL.indexOf("carrusel") > -1;
+
+  var formatNote = isReel
+    ? "1080x1920px (9:16) - Reel vertical"
+    : isCarr
+    ? "1080x1350px (4:5) por slide - maximo 10 slides"
+    : "1080x1350px (4:5) - Post estatico";
+
+  var paletaPost = p.p === "P3"
+    ? "Golden Horizon #C7B27A + Sand Passage #F2EF66"
+    : p.p === "P4"
+    ? "Mist Air #D6E3DC + Forest Escape #1A2A22"
+    : "Sage Journey #A9CBB4 + Forest Escape #1A2A22";
+
+  var composicion = isReel
+    ? "Video vertical 9:16. Apertura en negro con fade in suave. Logo AOT aparece en los ultimos 2 segundos, esquina inferior centrada. Maximo espacio negativo en el primer y ultimo frame."
+    : isCarr
+    ? "Slide 1 = portada impactante con texto editorial grande. Slides interiores: imagen 70%, texto 30% inferior o lateral. Slide final = fondo Forest Escape #1A2A22 con logo AOT centrado + CTA."
+    : "Imagen a sangre, sin marcos. Texto overlay en zona inferior izquierda o centrado. Mucho espacio negativo. Logo AOT esquina inferior derecha.";
+
+  var lines = [
+    "== BRIEF DE DISENO - AOT TAILORED EXPERIENCES ==",
+    "Post: " + p.t,
+    "Destino: " + p.dest + "  |  Formato: " + p.fmt + "  |  Fecha: " + p.d,
+    "Segmento: " + p.seg,
+    "",
+    "-- 1. COMPOSICION --",
+    composicion,
+    "",
+    "-- 2. FOTOGRAFIA --",
+    p.v,
+    "",
+    "-- 3. TIPOGRAFIA --",
+    "Display / titulares: Cormorant Garamond Light o Regular - tracking +50. Nunca bold en titulares.",
+    "Body / copy: Inter Light 300 - tamano minimo 14pt en digital.",
+    "Jerarquia: Titular grande > subtitulo pequeño en mayusculas > cuerpo de texto.",
+    "Texto overlay sobre foto: color claro (Sand #F2EF66 o Cream #F5F2EC) con sombra suave.",
+    "",
+    "-- 4. PALETA --",
+    "Principal del post: " + paletaPost,
+    "Paleta completa de marca:",
+    "  Sage Journey   #A9CBB4",
+    "  Forest Escape  #1A2A22",
+    "  Sand Passage   #F2EF66",
+    "  Stone Way      #6E726B",
+    "  Golden Horizon #C7B27A",
+    "  Mist Air       #D6E3DC",
+    "",
+    "-- 5. ELEMENTOS GRAFICOS --",
+    "Logo AOT (blanco sobre fondos oscuros, Forest sobre fondos claros).",
+    "Linea fina decorativa: 20-30px largo, grosor 1px, color Sage Journey.",
+    "Sin marcos, sin sombras pesadas, sin gradientes artificiales.",
+    (isCarr ? "Numeracion de slides: Inter Light en esquina superior derecha." : ""),
+    "",
+    "-- 6. MOODBOARD DE REFERENCIAS --",
+    "- Aman Resorts - campanas digitales 2023-2024",
+    "- Jacquemus - contenido Instagram overexposed Mediterranean",
+    "- Rimowa - fotografia de producto minimalista",
+    "- Cereal Magazine - editorial travel, paleta muted",
+    "- The Row - composicion silenciosa, mucho aire",
+    "",
+    "-- 7. ENTREGABLES --",
+    formatNote,
+    "Formatos: PNG sin compresion + JPG 80% para Instagram.",
+    (isCarr ? "Slides nombrados: AOT_S" + p.s + "_Slide_01.png, AOT_S" + p.s + "_Slide_02.png..." : "Archivo: AOT_" + p.d.replace(/ /g,"_") + "_v1.png"),
+    "",
+    "-- CTA --",
+    p.cta
+  ];
+
+  out.textContent = lines.join("\n");
+  out.classList.add("show");
+  cp.classList.add("show");
+  btn.disabled = false;
+}
+
+function agCopy(outId, btnId){
+  var text = document.getElementById(outId).textContent;
+  navigator.clipboard.writeText(text).then(function(){
+    var b = document.getElementById(btnId);
+    var orig = b.textContent;
+    b.textContent = "Copiado \u2713"; b.classList.add("done");
+    setTimeout(function(){ b.textContent = orig; b.classList.remove("done"); }, 2000);
+  });
+}
+
+
+// --- HIGGSFIELD GENERATOR ---------------------------------------------
+var hfType = "image";
+var hfAr = "4:5";
+var hfCurrentPrompt = "";
+
+var AOT_COLORS = ["#A9CBB4","#1A2A22","#F2EF66","#6E726B","#C7B27A","#D6E3DC"];
+
+var HF_BALANCE = 2509.28; // cached from API
+
+function hfUpdateCost(){
+  var isImg = (hfType === "image");
+  var sel = document.getElementById(isImg ? "hf-model-img" : "hf-model-vid");
+  var opt = sel ? sel.options[sel.selectedIndex] : null;
+  var cost = opt ? parseFloat(opt.getAttribute("data-cost")) : 0;
+  var bal = HF_BALANCE;
+  var after = Math.max(0, bal - cost).toFixed(2);
+
+  var costEl = document.getElementById("hf-cost-val");
+  var balEl = document.getElementById("hf-bal-val");
+  var afterRow = document.getElementById("hf-after-val");
+
+  if(costEl) costEl.textContent = cost + " cr\u00e9ditos";
+  if(balEl) balEl.textContent = bal.toFixed(2) + " cr";
+  if(afterRow){
+    afterRow.innerHTML = "Quedan: <strong style=\"color:" + (bal >= cost ? "var(--sage)" : "#c00") + "\">" + after + " cr</strong>";
+  }
+
+  // Disable generate if insufficient
+  var btn = document.getElementById("hf-gen-btn");
+  if(btn){
+    btn.disabled = (bal < cost);
+    btn.title = (bal < cost) ? "Cr\u00e9ditos insuficientes" : "";
+  }
+}
+
+function hfSetType(t){
+  hfType = t;
+  document.getElementById("hf-type-img").classList.toggle("active", t==="image");
+  document.getElementById("hf-type-vid").classList.toggle("active", t==="video");
+  document.getElementById("hf-model-img").style.display = t==="image"?"block":"none";
+  document.getElementById("hf-model-vid").style.display = t==="video"?"block":"none";
+  // update aspect ratio defaults
+  if(t==="video"){
+    hfSetAr("9:16");
+  } else {
+    hfSetAr("4:5");
+  }
+  hfBuildPrompt();
+  hfUpdateCost();
+}
+
+function hfSetAr(ar){
+  hfAr = ar;
+  document.querySelectorAll(".hf-ar").forEach(function(el){
+    el.classList.toggle("active", el.textContent.startsWith(ar));
+  });
+}
+
+function hfBuildPrompt(){
+  var prev = document.getElementById("hf-prompt-preview"); if(!curPost){ if(prev) prev.textContent="Abre un post para ver el prompt..."; return; }
+  var p = curPost;
+  var base = p.v + " \u2014 " + p.dest;
+  var style = "quiet luxury editorial, overexposed warm cinematic light, film grain, Jacquemus aesthetic, sage green and sand tones, minimal negative space, premium travel photography";
+  var typeExtra = hfType === "video"
+    ? "cinematic b-roll, slow gentle camera movement, luxury travel reel, ambient mood"
+    : "editorial still photography, high-end travel magazine, sharp foreground soft background";
+  var full = base + ". Style: " + style + ". " + typeExtra + ". Ultra high quality, 4K.";
+  hfCurrentPrompt = full;
+  var prev = document.getElementById("hf-prompt-preview");
+  if(prev) prev.textContent = full.substring(0,200) + (full.length>200?"...":"");
+}
+
+function hfGenerate(){
+  if(!curPost || !hfCurrentPrompt) return;
+
+  var model = hfType === "image"
+    ? document.getElementById("hf-model-img").value
+    : document.getElementById("hf-model-vid").value;
+
+  var prompt = hfCurrentPrompt;
+  var ar = hfAr;
+
+  // Build Higgsfield deep link with prompt pre-filled
+  var section = hfType === "image" ? "image" : "video";
+  var hfUrl = "https://higgsfield.ai/" + section + "/" + model +
+    "?prompt=" + encodeURIComponent(prompt) +
+    "&aspect_ratio=" + encodeURIComponent(ar);
+
+  // Also copy prompt to clipboard as backup
+  navigator.clipboard.writeText(prompt).catch(function(){});
+
+  // Open Higgsfield with prompt pre-filled
+  window.open(hfUrl, "_blank");
+
+  // Show confirmation
+  var status = document.getElementById("hf-status");
+  var err = document.getElementById("hf-err");
+  err.style.display = "none";
+  status.style.display = "block";
+  status.innerHTML =
+    "<div style=\"background:var(--forest);color:var(--mist);padding:12px 14px;line-height:1.7;font-size:11px;\">" +
+    "<strong style=\"color:var(--sage);font-size:8px;letter-spacing:.14em;text-transform:uppercase\">Higgsfield abierto</strong><br><br>" +
+    "Modelo: <strong>" + model + "</strong><br>" +
+    "Formato: <strong>" + ar + "</strong><br><br>" +
+    "El prompt ya viene pre-cargado. Si no aparece autom&aacute;ticamente, est&aacute; copiado en tu portapapeles — pega con Cmd+V." +
+    "</div>";
+}
+
+
+
+showWeek(1);
+
+</script>
+</body>
+</html>
